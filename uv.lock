@@ -3,6 +3,7 @@ requires-python = ">=3.11"
 
 [manifest]
 members = [
+    "agent-ctl",
     "coreutils-lib",
     "database-lib",
     "depends-lib",
@@ -11,6 +12,31 @@ members = [
     "settings-lib",
     "setup-lib",
     "spacetradersproject",
+]
+
+[[package]]
+name = "agent-ctl"
+version = "0.1.0"
+source = { editable = "packages/agent-ctl" }
+dependencies = [
+    { name = "database-lib" },
+    { name = "dynaconf" },
+    { name = "http-lib" },
+    { name = "loguru" },
+    { name = "pydantic" },
+    { name = "settings-lib" },
+    { name = "setup-lib" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "database-lib", editable = "libs/database-lib" },
+    { name = "dynaconf", specifier = ">=3.2.6" },
+    { name = "http-lib", editable = "libs/http-lib" },
+    { name = "loguru", specifier = ">=0.7.3" },
+    { name = "pydantic", specifier = ">=2.10.5" },
+    { name = "settings-lib", editable = "libs/settings-lib" },
+    { name = "setup-lib", editable = "libs/setup-lib" },
 ]
 
 [[package]]

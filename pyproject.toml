@@ -38,7 +38,7 @@ depends-lib = { workspace = true }
 setup-lib = { workspace = true }
 
 [tool.uv.workspace]
-members = ["libs/*", "packages/domain"]
+members = ["libs/*", "packages/domain", "packages/agent-ctl"]
 
 [build-system]
 requires = ["hatchling"]
