@@ -1,13 +1,14 @@
+from __future__ import annotations
+
+import agent_ctl
+import core_utils
 import core_utils.hash_utils
 import core_utils.uuid_utils
-import http_lib
-import settings
 import db_lib
-import core_utils
-import setup
-import agent_ctl
-
+import http_lib
 from loguru import logger as log
+import settings
+import setup
 
 if __name__ == "__main__":
     print(f"Database settings: {settings.DB_SETTINGS.as_dict()}")

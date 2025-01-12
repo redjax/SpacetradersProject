@@ -3,12 +3,11 @@ from __future__ import annotations
 import json
 
 from agent_ctl.constants import API_AGENT_REGISTER_URL
-from domain.spacetraders import agent as agent_domain
 
+from domain.spacetraders import agent as agent_domain
 import http_lib
 import httpx
 from loguru import logger as log
-
 
 def build_register_agent_request(
     agent_symbol: str = None,

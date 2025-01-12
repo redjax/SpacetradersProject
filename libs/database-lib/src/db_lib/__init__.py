@@ -10,5 +10,5 @@ from .__methods import (
     show_table_names,
 )
 from .base import Base
-from .utils import backup_sqlite_db, dump_sqlite_db_schema
 from .mixins import TableNameMixin, TimestampMixin
+from .utils import backup_sqlite_db, dump_sqlite_db_schema
