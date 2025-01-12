@@ -1,5 +1,5 @@
 [project]
-name = "http-lib"
+name = "domain"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -8,19 +8,13 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "domain",
-    "dynaconf>=3.2.6",
-    "hishel>=0.1.1",
-    "httpx>=0.28.1",
     "loguru>=0.7.3",
+    "pydantic>=2.10.5",
 ]
 
 [project.scripts]
-http-lib = "http_lib:main"
+domain = "domain:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.uv.sources]
-domain = { workspace = true }

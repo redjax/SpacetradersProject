@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "domain",
     "dynaconf>=3.2.6",
     "http-lib",
     "loguru>=0.7.3",
@@ -24,9 +25,10 @@ dev = [
 [tool.uv.sources]
 spacetradersproject = { workspace = true}
 http-lib = { workspace = true }
+domain = { workspace = true }
 
 [tool.uv.workspace]
-members = ["libs/*"]
+members = ["libs/*", "packages/domain"]
 
 [build-system]
 requires = ["hatchling"]

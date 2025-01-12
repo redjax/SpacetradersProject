@@ -3,6 +3,7 @@ requires-python = ">=3.11"
 
 [manifest]
 members = [
+    "domain",
     "http-lib",
     "spacetradersproject",
 ]
@@ -79,6 +80,21 @@ wheels = [
 ]
 
 [[package]]
+name = "domain"
+version = "0.1.0"
+source = { editable = "packages/domain" }
+dependencies = [
+    { name = "loguru" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "loguru", specifier = ">=0.7.3" },
+    { name = "pydantic", specifier = ">=2.10.5" },
+]
+
+[[package]]
 name = "dynaconf"
 version = "3.2.6"
 source = { registry = "https://pypi.org/simple" }
@@ -131,6 +147,7 @@ name = "http-lib"
 version = "0.1.0"
 source = { editable = "libs/http-lib" }
 dependencies = [
+    { name = "domain" },
     { name = "dynaconf" },
     { name = "hishel" },
     { name = "httpx" },
@@ -139,6 +156,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "domain", editable = "packages/domain" },
     { name = "dynaconf", specifier = ">=3.2.6" },
     { name = "hishel", specifier = ">=0.1.1" },
     { name = "httpx", specifier = ">=0.28.1" },
@@ -380,6 +398,7 @@ name = "spacetradersproject"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "domain" },
     { name = "dynaconf" },
     { name = "http-lib" },
     { name = "loguru" },
@@ -395,6 +414,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "domain", editable = "packages/domain" },
     { name = "dynaconf", specifier = ">=3.2.6" },
     { name = "http-lib", editable = "libs/http-lib" },
     { name = "loguru", specifier = ">=0.7.3" },
