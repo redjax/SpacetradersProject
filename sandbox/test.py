@@ -1,13 +1,16 @@
 import core_utils.hash_utils
+import core_utils.uuid_utils
 import http_lib
 import settings
 import db_lib
 import core_utils
 import setup
+import agent_ctl
 
 from loguru import logger as log
 
 if __name__ == "__main__":
+    print(f"Database settings: {settings.DB_SETTINGS.as_dict()}")
     setup.setup_loguru_logging(log_level=settings.LOGGING_SETTINGS.get("LOG_LEVEL", default="INFO"))
     
     log.debug("Test debug message")
@@ -25,3 +28,14 @@ if __name__ == "__main__":
     
     _hash = core_utils.hash_utils.get_hash_from_str(input_str="This is a test!")
     log.info(f"Hashed string: {_hash}")
+
+    log.info("Testing register agent")
+    try:
+        register_agent_response = agent_ctl.register_agent(agent_symbol=core_utils.uuid_utils.get_rand_uuid(characters=14, as_str=True), use_cache=True)
+    except Exception as exc:
+        msg = f"({type(exc)}) Error registering demo agent. Details: {exc}"
+        log.error(msg)
+        
+        raise exc
+
+    log.info(f"Registered agent: {register_agent_response}")

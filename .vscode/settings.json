@@ -6,6 +6,8 @@
         "./libs/coreutils-lib/src",
         "./libs/depends-lib/src",
         "./libs/setup-lib",
-        "./packages/domain/src"
+        "./packages/domain/src",
+        "./packages/agent-ctl/src",
+        "./packages/spacetraders-ctl/src"
     ]
 }

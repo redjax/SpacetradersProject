@@ -11,3 +11,4 @@ from .__methods import (
 )
 from .base import Base
 from .utils import backup_sqlite_db, dump_sqlite_db_schema
+from .mixins import TableNameMixin, TimestampMixin

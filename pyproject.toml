@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "agent-ctl",
     "coreutils-lib",
     "database-lib",
     "depends-lib",
@@ -15,6 +16,7 @@ dependencies = [
     "pydantic>=2.10.5",
     "settings-lib",
     "setup-lib",
+    "spacetraders-ctl",
 ]
 
 [dependency-groups]
@@ -36,9 +38,11 @@ settings-lib = { workspace = true }
 coreutils-lib = { workspace = true }
 depends-lib = { workspace = true }
 setup-lib = { workspace = true }
+agent-ctl = { workspace = true }
+spacetraders-ctl = { workspace = true }
 
 [tool.uv.workspace]
-members = ["libs/*", "packages/domain", "packages/agent-ctl"]
+members = ["libs/*", "packages/domain", "packages/agent-ctl", "packages/spacetraders-ctl"]
 
 [build-system]
 requires = ["hatchling"]

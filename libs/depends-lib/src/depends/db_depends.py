@@ -34,6 +34,14 @@ def get_db_uri(
         (sa.URL): A SQLAlchemy `URL`
 
     """
+    if DB_SETTINGS.get("DB_TYPE") == "sqlite":
+        db_uri: sa.URL = db.get_db_uri(drivername=drivername, database=database, username=None, password=None, host=None, port=None)
+        
+        if as_str:
+            return str(db_uri)
+        else:
+            return db_uri
+
     db_uri: sa.URL = db.get_db_uri(
         drivername=drivername,
         username=username,
