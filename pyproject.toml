@@ -14,6 +14,7 @@ dependencies = [
     "loguru>=0.7.3",
     "pydantic>=2.10.5",
     "settings-lib",
+    "setup-lib",
 ]
 
 [dependency-groups]
@@ -34,6 +35,7 @@ database-lib = { workspace = true }
 settings-lib = { workspace = true }
 coreutils-lib = { workspace = true }
 depends-lib = { workspace = true }
+setup-lib = { workspace = true }
 
 [tool.uv.workspace]
 members = ["libs/*", "packages/domain"]

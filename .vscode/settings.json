@@ -5,6 +5,7 @@
         "./libs/settings-lib/src",
         "./libs/coreutils-lib/src",
         "./libs/depends-lib/src",
+        "./libs/setup-lib",
         "./packages/domain/src"
     ]
 }
