@@ -3,6 +3,7 @@
         "./libs/http-lib/src",
         "./libs/database-lib/src",
         "./libs/settings-lib/src",
+        "./libs/coreutils-lib/src",
         "./packages/domain/src"
     ]
 }

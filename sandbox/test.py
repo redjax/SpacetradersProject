@@ -1,6 +1,8 @@
+import core_utils.hash_utils
 import http_lib
 import settings
 import db_lib
+import core_utils
 
 if __name__ == "__main__":
     req = http_lib.build_request(url="https://www.google.com")
@@ -13,3 +15,6 @@ if __name__ == "__main__":
         raise exc
     
     print(f"Response: [{res.status_code}: {res.reason_phrase}]")
+    
+    _hash = core_utils.hash_utils.get_hash_from_str(input_str="This is a test!")
+    print(f"Hashed string: {_hash}")

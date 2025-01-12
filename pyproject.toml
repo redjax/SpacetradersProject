@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "coreutils-lib",
     "database-lib",
     "domain",
     "dynaconf>=3.2.6",
@@ -30,6 +31,7 @@ http-lib = { workspace = true }
 domain = { workspace = true }
 database-lib = { workspace = true }
 settings-lib = { workspace = true }
+coreutils-lib = { workspace = true }
 
 [tool.uv.workspace]
 members = ["libs/*", "packages/domain"]
