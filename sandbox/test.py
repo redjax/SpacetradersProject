@@ -1,4 +1,6 @@
 import http_lib
+import settings
+import db_lib
 
 if __name__ == "__main__":
     req = http_lib.build_request(url="https://www.google.com")

@@ -1,6 +1,8 @@
 {
     "python.analysis.extraPaths": [
         "./libs/http-lib/src",
+        "./libs/database-lib/src",
+        "./libs/settings-lib/src",
         "./packages/domain/src"
     ]
 }
