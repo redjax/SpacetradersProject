@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 
 from agent_ctl.constants import API_AGENT_REGISTER_URL
-
 from domain.spacetraders import agent as agent_domain
 import http_lib
 import httpx
@@ -85,7 +84,7 @@ def parse_register_agent_response(response_obj: httpx.Response = None) -> dict:
         raise msg
 
 
-def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", headers: dict = { "Content-Type": "application/json" }, use_cache: bool = False):
+def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", headers: dict = { "Content-Type": "application/json" }, use_cache: bool = False) -> dict:
     try:
         register_req = build_register_agent_request(agent_symbol=agent_symbol, agent_faction=agent_faction, headers=headers)
     except Exception as exc:
@@ -111,3 +110,27 @@ def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", head
         log.error(msg)
         
         raise exc
+
+
+def register_multiple_agents(agents: list[dict], headers: dict = { "Content-Type": "application/json" }, use_cache: bool = False) -> list[dict]:
+    # agent_symbol: str = None, agent_faction: str = "COSMIC",
+    log.info(f"Registering [{len(agents)}] agent(s)")
+    
+    agent_responses: list[dict] = []
+    
+    for agent in agents:
+        agent_symbol: str = agent["symbol"]
+        agent_faction: str = agent["faction"]
+        
+        try:
+            registered_agent_dict: dict = register_agent(agent_symbol=agent_symbol, agent_faction=agent_faction, headers=headers)
+            agent_responses.append(registered_agent_dict)
+        except Exception as exc:
+            msg = f"({type(exc)}) Error registering agent '{agent_symbol}'. Details: {exc}"
+            log.error(msg)
+            
+            continue
+    
+    log.info(f"Successfully registered [{len(agent_responses)}] agent(s).")
+    
+    return agent_responses

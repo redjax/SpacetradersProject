@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Union
+from datetime import datetime
 
 import pendulum
 from pydantic import (
@@ -60,3 +60,22 @@ class RegisterAgentResponse(BaseModel):
         agent_token: str = self.content_decode["data"]["token"]
 
         return agent_token
+
+
+class RegisteredAgentBase(BaseModel):
+    account_id: str = Field(default=None)
+    symbol: str = Field(default=None)
+    faction: str = Field(default=None)
+    headquarters: str = Field(default=None)
+    token: str = Field(default=None, repr=False)
+    
+
+class RegisteredAgentIn(RegisteredAgentBase):
+    pass
+
+
+class RegisteredAgentOut(RegisteredAgentBase):
+    agent_id: int
+    
+    created_at: str | datetime
+    updated_at: str | datetime
