@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 
 from agent_ctl.constants import API_AGENT_REGISTER_URL
-
 from domain.spacetraders import agent as agent_domain
 import http_lib
 import httpx

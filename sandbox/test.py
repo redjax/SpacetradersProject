@@ -142,13 +142,15 @@ def demo_register_multiple_agents(num_agents: int = 3):
 
 
 if __name__ == "__main__":
-    print(f"Database settings: {settings.DB_SETTINGS.as_dict()}")
     setup.setup_loguru_logging(
         log_level=settings.LOGGING_SETTINGS.get("LOG_LEVEL", default="INFO")
     )
     setup.setup_database(engine=return_engine())
+    
+    NUM_AGENTS_TO_REGISTER = 5
 
     log.debug("Test debug message")
+    log.debug(f"Database settings: {settings.DB_SETTINGS.as_dict()}")
 
-    # demo_register_single_agent()
-    demo_register_multiple_agents()
+    demo_register_single_agent()
+    demo_register_multiple_agents(num_agents=NUM_AGENTS_TO_REGISTER)
