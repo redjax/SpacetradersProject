@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Union
+from datetime import datetime
 
 import pendulum
 from pydantic import (
@@ -67,7 +67,7 @@ class RegisteredAgentBase(BaseModel):
     symbol: str = Field(default=None)
     faction: str = Field(default=None)
     headquarters: str = Field(default=None)
-    token: str  = Field(default=None, repr=False)
+    token: str = Field(default=None, repr=False)
     
 
 class RegisteredAgentIn(RegisteredAgentBase):
@@ -75,7 +75,7 @@ class RegisteredAgentIn(RegisteredAgentBase):
 
 
 class RegisteredAgentOut(RegisteredAgentBase):
-    id: int
+    agent_id: int
     
-    created_at: str
-    updated_at: str
+    created_at: str | datetime
+    updated_at: str | datetime

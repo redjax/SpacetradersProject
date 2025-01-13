@@ -28,6 +28,24 @@ if __name__ == "__main__":
     
     log.info(f"Found [{len(all_agents)}] agent(s) in database")
     
+    agents: list[agent_domain.RegisteredAgentOut] = []
+    conversion_errs: list[agent_domain.RegisteredAgentModel] = []
+    
     log.debug("All agents:")
     for agent in all_agents:
-        log.debug(f"Agent: {agent.__dict__}")
+        try:
+            _agent: agent_domain.RegisteredAgentOut = agent_domain.RegisteredAgentOut.model_validate(agent.__dict__)
+            agents.append(_agent)
+        except Exception as exc:
+            msg = f"({type(exc)}) Error converting agent database model to RegisteredAgentOut schema. Details: {exc}"
+            log.error(msg)
+            conversion_errs.append(agent)
+            
+            continue
+    
+    log.info(f"Converted [{len(agents)}] agent model(s) to RegisteredAgentOut schema(s)")
+    if len(conversion_errs) > 0:
+        log.warning(f"Errored on [{len(conversion_errs)}] conversion(s) to RegisteredAgentOut.")
+
+    for agent in agents:
+        log.info(f"Registered agent: {agent}")
