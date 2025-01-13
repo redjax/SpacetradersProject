@@ -43,12 +43,12 @@ def send_register_agent_request(request_obj: httpx.Request = None, use_cache: bo
         f"request_obj must be of type httpx.Request. Got type: ({type(request_obj)})"
     )
 
-    log.info(f"Registering agent with Spacetraders API, request URL: {request_obj.url}")
+    log.debug(f"Registering agent with Spacetraders API, request URL: {request_obj.url}")
     with http_lib.get_http_controller(use_cache=use_cache) as http_ctl:
     # with httpx.Client() as client:
         try:
             res: httpx.Response = http_ctl.client.send(request_obj)
-            log.info(f"Register agent res: [{res.status_code}: {res.reason_phrase}]")
+            log.debug(f"Register agent res: [{res.status_code}: {res.reason_phrase}]")
 
             return res
         except Exception as exc:
@@ -101,6 +101,9 @@ def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", head
         
         raise exc
     
+    if register_agent_res.status_code == 409:
+        raise agent_domain.exc.AgentAlreadyRegisteredException(symbol=agent_symbol)
+    
     try:
         parsed_agent = parse_register_agent_response(response_obj=register_agent_res)
         
@@ -114,7 +117,7 @@ def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", head
 
 def register_multiple_agents(agents: list[dict], headers: dict = { "Content-Type": "application/json" }, use_cache: bool = False) -> list[dict]:
     # agent_symbol: str = None, agent_faction: str = "COSMIC",
-    log.info(f"Registering [{len(agents)}] agent(s)")
+    log.debug(f"Registering [{len(agents)}] agent(s)")
     
     agent_responses: list[dict] = []
     
@@ -131,6 +134,6 @@ def register_multiple_agents(agents: list[dict], headers: dict = { "Content-Type
             
             continue
     
-    log.info(f"Successfully registered [{len(agent_responses)}] agent(s).")
+    log.debug(f"Successfully registered [{len(agent_responses)}] agent(s).")
     
     return agent_responses

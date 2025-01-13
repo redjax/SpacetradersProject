@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "cyclopts>=3.1.5",
     "database-lib",
     "dynaconf>=3.2.6",
     "http-lib",
