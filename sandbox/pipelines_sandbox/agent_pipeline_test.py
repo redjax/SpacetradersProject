@@ -33,15 +33,12 @@ def demo_register_random_agents_return_schemas(db_engine: sa.Engine, num_agents_
 def main(db_engine=None, num_agents_to_register: int = 3):
     log.info("Starting agent registration pipeline")
     
-    # registered_agent_models = demo_register_random_agents(db_engine=db_engine, num_agents_to_register=num_agents_to_register)
-    # log.debug(f"Registered agent models ({type(registered_agent_models)}), list is empty: {registered_agent_models is None}")
-    # if registered_agent_models is not None:
-    #     log.info(f"Returned [{len(registered_agent_models)}] registered agent models.")
-    #     for _agent_model in registered_agent_models:
-    #         print(f"Agent ({type(_agent_model)}): {_agent_model}")
-    
-    # log.info("\nShort sleep after registering agents, before registering a new batch and returning schemas\n")
-    # time.sleep(2)
+    registered_agent_models = demo_register_random_agents(db_engine=db_engine, num_agents_to_register=num_agents_to_register)
+    log.debug(f"Registered agent models ({type(registered_agent_models)}), list is empty: {registered_agent_models is None}")
+    if registered_agent_models is not None:
+        log.info(f"Returned [{len(registered_agent_models)}] registered agent models.")
+        for _agent_model in registered_agent_models:
+            print(f"Agent ({type(_agent_model)}): {_agent_model}")
 
     registered_agent_model_schemas = demo_register_random_agents_return_schemas(db_engine=db_engine, num_agents_to_register=num_agents_to_register)
     log.debug(f"Registered agent schemas ({type(registered_agent_model_schemas)}), list is empty: {registered_agent_model_schemas is None}")
