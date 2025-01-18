@@ -2,3 +2,4 @@ from __future__ import annotations
 
 from .methods import register_agent, register_multiple_agents,register_random_agent
 from .db_client import load_registered_agent_by_symbol
+from .converters import convert_agent_dict_to_class, convert_agent_model_to_schema, convert_agent_schema_to_model, convert_http_response_schema_to_agent_in_schema
