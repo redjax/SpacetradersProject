@@ -18,7 +18,7 @@ class RegisterAgentResponse(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # created_at: pendulum.DateTime = Field(default_factory=pendulum.now)
-    full_response: t.Union[bytes, dict] = Field(default=None)
+    full_response: t.Union[bytes, dict] = Field(default=None, repr=False)
     
     @field_validator("full_response")
     def validate_full_response(cls, v) -> bytes:

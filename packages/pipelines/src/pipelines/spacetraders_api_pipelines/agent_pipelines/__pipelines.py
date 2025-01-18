@@ -103,39 +103,13 @@ def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, sa
     log.info(f"Converted [{len(register_agent_http_res_schemas)}] registered agent HTTP response(s) to RegisteredAgentIn schemas. Error on [{len(convert_http_res_to_schema_errors)}] conversion(s)")
     
     if not save_to_db:
+        log.debug("save_to_db=False, return list of RegisteredAgentIn object(s)")
         return register_agent_http_res_schemas
     
     log.info(f"Saving [{len(registered_agents)}] agent(s) to database")
-    
-    agents_saved_to_db: list[agent_domain.RegisteredAgentModel] = []
-    errored_saving_to_db: list[agent_domain.RegisteredAgentIn] = []
-    errored_converting_schema_to_db_model: list[agent_domain.RegisteredAgentIn] = []
-    agents_existed_in_db: list[agent_domain.RegisteredAgentModel] = []
-    
-    for agent_schema in register_agent_http_res_schemas:
-        existing_agent: agent_domain.RegisteredAgentModel | None = agent_ctl.db_client.load_registered_agent_by_symbol(symbol=agent_schema.symbol, engine=db_engine)
-        if existing_agent:
-            log.warning(f"Agent '{agent_schema.symbol}' already existed in database. Skipping save.")
-            agents_existed_in_db.append(existing_agent)
+    agents_saved_to_db = agent_ctl.db_client.save_multiple_registered_agents_to_db(agents=register_agent_http_res_schemas, engine=db_engine)
 
-            continue
-        
-        log.info(f"Agent '{agent_schema.symbol}' not found in database. Saving.")
-        try:
-            db_agent: agent_domain.RegisteredAgentModel = agent_ctl.db_client.save_registered_agent_to_db(agent=agent_schema, engine=db_engine)
-            log.success(f"Saved agent '{db_agent.symbol}' to database.")
-            
-            agents_saved_to_db.append(db_agent)
-            
-            continue
-        except Exception as exc:
-            msg = f"({type(exc)}) Error saving agent '{agent_schema.symbol}' to database. Details: {exc}"
-            log.error(msg)
-            
-            errored_saving_to_db.append(agent_schema)
-            continue
-        
-    log.info(f"Saved [{len(agents_saved_to_db)}] agent(s) to database. [{len(agents_existed_in_db)}] agent(s) already existed in database and were skipped. [{len(errored_saving_to_db)}] error(s) saving agent(s) to database.")
+    log.info(f"Saved [{len(agents_saved_to_db)}] agent(s) to database.")
 
     if return_schemas:
         log.debug("return_schemas=True, converting RegisteredAgentModel object to RegisteredAgentOut object.")
