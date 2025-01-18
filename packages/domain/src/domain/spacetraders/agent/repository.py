@@ -19,6 +19,9 @@ class RegisteredAgentRepository(db_lib.base.BaseRepository[RegisteredAgentModel]
     
     def get_by_symbol(self, symbol: str) -> RegisteredAgentModel | None:
         return self.session.query(RegisteredAgentModel).filter(RegisteredAgentModel.symbol == symbol).one_or_none()
+    
+    def get_multiple_by_symbol(self, symbols: list[str]) -> list[RegisteredAgentModel]:
+        return self.session.query(RegisteredAgentModel).filter(RegisteredAgentModel.symbol in symbols).all()
 
     def get_by_faction(self, faction: str = "COSMIC") -> list[RegisteredAgentModel] | None:
         return self.session.query(RegisteredAgentModel).filter(RegisteredAgentModel.faction == faction).all()

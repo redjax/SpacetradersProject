@@ -33,6 +33,30 @@ class BaseRepository(t.Generic[T]):
         self.session.refresh(obj)
 
         return obj
+    
+    def create_all(self, objs: list[T]) -> list[T]:
+        """Create and commit a list of objects in a single transaction.
+
+        Args:
+            objs: A list of objects to add to the database.
+
+        Returns:
+            The list of successfully added objects.
+        """
+        try:
+            self.session.add_all(objs)
+            ## Ensure objects are flushed to the database
+            self.session.flush()
+
+            for obj in objs:
+                self.session.refresh(obj)
+                
+            # self.session.commit()
+                
+            return objs
+        except Exception as exc:
+            self.session.rollback()
+            raise RuntimeError(f"Failed to create objects: {exc}")
 
     def get(self, id: int) -> t.Optional[T]:
         return self.session.get(self.model, id)
