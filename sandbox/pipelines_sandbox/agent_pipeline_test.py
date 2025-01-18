@@ -26,6 +26,8 @@ def demo_register_random_agents_return_schemas(db_engine: sa.Engine, num_agents_
     log.debug(f"registered_agent_model_schemas type: ({type(registered_agent_model_schemas)})")
     if registered_agent_model_schemas:
         log.info(f"Registered [{len(registered_agent_model_schemas)}] agent(s). List is RegisteredAgentOut objects")
+        
+    return registered_agent_model_schemas
 
 
 def main(db_engine=None, num_agents_to_register: int = 3):

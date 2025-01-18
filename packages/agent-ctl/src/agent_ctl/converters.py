@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing as t
+import json
 
 from domain.spacetraders.agent.models import RegisteredAgentModel
 from domain.spacetraders.agent.repository import RegisteredAgentRepository
@@ -64,7 +65,7 @@ def convert_agent_model_to_schema(db_agent: RegisteredAgentModel) -> RegisteredA
     """
     log.debug(f"Converting registered agent database entity (type: {type(db_agent)}) to schema.")
     try:
-        converted_agent: RegisteredAgentOut = RegisteredAgentOut.model_validate(
+        converted_agent: RegisteredAgentOut = RegisteredAgentOut(
             agent_id=db_agent.agent_id,
             created_at=db_agent.created_at,
             updated_at=db_agent.updated_at,

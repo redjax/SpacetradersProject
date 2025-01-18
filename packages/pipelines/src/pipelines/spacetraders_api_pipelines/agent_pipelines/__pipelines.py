@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import time
 import typing as t
+import json
 
 import agent_ctl
 import db_lib
@@ -118,6 +119,7 @@ def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, sa
         errored_converting_model_to_schema: list[agent_domain.RegisteredAgentModel] = []
         
         for db_agent in agents_saved_to_db:
+            log.debug(f"Converting agent ({type(db_agent)}): {db_agent}")
             try:
                 converted_agent: agent_domain.RegisteredAgentOut = agent_ctl.convert_agent_model_to_schema(db_agent=db_agent)
                 agent_schemas.append(converted_agent)
