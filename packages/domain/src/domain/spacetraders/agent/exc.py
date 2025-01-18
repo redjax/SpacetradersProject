@@ -3,6 +3,7 @@ class AgentAlreadyRegisteredException(Exception):
     
     Attributes:
         message (str): The message to print when the exception is raised.
+
     """
     
     def __init__(self, symbol: str):

@@ -7,11 +7,15 @@ from depends import db_depends
 
 import sqlalchemy as sa
 
-def load_registered_agent_by_symbol(symbol: str) -> agent_domain.RegisteredAgentOut:
+def load_registered_agent_by_symbol(symbol: str, engine: sa.Engine = None) -> agent_domain.RegisteredAgentModel | None:
     if not symbol:
         raise ValueError("Agent symbol cannot be None.")
 
-    session_pool = db_depends.get_session_pool()
+    if not engine:
+        log.warning("DB engine value is None. Initializing engine with app's database configuration.")
+        engine: sa.Engine = db_depends.get_db_engine()
+
+    session_pool = db_depends.get_session_pool(engine=engine)
     
     with session_pool() as session:
         repo = agent_domain.RegisteredAgentRepository(session)
@@ -26,9 +30,15 @@ def load_registered_agent_by_symbol(symbol: str) -> agent_domain.RegisteredAgent
         return registered_agent
 
 
-def save_registered_agent_to_db(agent: t.Union[agent_domain.RegisteredAgentIn, agent_domain.RegisterAgentResponse], engine: sa.Engine = db_depends.get_db_engine()):
+def save_registered_agent_to_db(agent: t.Union[agent_domain.RegisteredAgentIn, agent_domain.RegisterAgentResponse], engine: sa.Engine = None):
     if not agent:
         raise ValueError("agent cannot be None.")
+    
+    if not engine:
+        log.warning("DB engine value is None. Initializing engine with app's database configuration.")
+        engine: sa.Engine = db_depends.get_db_engine()
+        
+    log.debug(f"DB engine URL: {engine.url}")
     
     session_pool = db_depends.get_session_pool(engine=engine)
     
