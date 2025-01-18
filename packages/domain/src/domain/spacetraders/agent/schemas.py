@@ -18,10 +18,10 @@ class RegisterAgentResponse(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # created_at: pendulum.DateTime = Field(default_factory=pendulum.now)
-    response_content: t.Union[bytes, dict] = Field(default=None)
+    full_response: t.Union[bytes, dict] = Field(default=None)
     
-    @field_validator("response_content")
-    def validate_response_content(cls, v) -> bytes:
+    @field_validator("full_response")
+    def validate_full_response(cls, v) -> bytes:
         if isinstance(v, bytes):
             return v
         elif isinstance(v, dict):
@@ -34,7 +34,7 @@ class RegisterAgentResponse(BaseModel):
     @computed_field
     @property
     def content_decode(self) -> dict:
-        decoded: dict = json.loads(self.response_content)
+        decoded: dict = json.loads(self.full_response)
 
         return decoded
 
@@ -80,7 +80,18 @@ class RegisteredAgentBase(BaseModel):
     faction: str = Field(default=None)
     headquarters: str = Field(default=None)
     token: str = Field(default=None, repr=False)
-    full_response: dict = Field(default=None, repr=False)
+    full_response: t.Union[dict, bytes] = Field(default=None, repr=False)
+    
+    @field_validator("full_response")
+    def validate_full_response(cls, v) -> dict:
+        if isinstance(v, dict):
+            return v
+        elif isinstance(v, bytes):
+            _dict = json.loads(v)
+            
+            return _dict
+        else:
+            raise ValidationError
     
 
 class RegisteredAgentIn(RegisteredAgentBase):
