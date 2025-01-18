@@ -1,5 +1,6 @@
 from loguru import logger as log
 
+import typing as t
 import time
 import db_lib
 from depends import db_depends
@@ -11,7 +12,7 @@ import agent_ctl
 import sqlalchemy as sa
 
 
-def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, save_to_db: bool = False, db_engine: sa.Engine | None = None):
+def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, save_to_db: bool = False, db_engine: sa.Engine | None = None, return_schemas: bool = False) -> list[t.Union[agent_domain.RegisteredAgentModel, agent_domain.RegisteredAgentIn, agent_domain.RegisteredAgentOut]]:
     if save_to_db:
         if not db_engine:
             log.warning("save_to_db=True but missing database engine. Initializing one from app's configuration")
@@ -102,6 +103,9 @@ def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, sa
     
     log.info(f"Converted [{len(register_agent_http_res_schemas)}] registered agent HTTP response(s) to RegisteredAgentIn schemas. Error on [{len(convert_http_res_to_schema_errors)}] conversion(s)")
     
+    if not save_to_db:
+        return register_agent_http_res_schemas
+    
     log.info(f"Saving [{len(registered_agents)}] agent(s) to database")
     
     agents_saved_to_db: list[agent_domain.RegisteredAgentModel] = []
@@ -134,3 +138,27 @@ def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, sa
         
     log.info(f"Saved [{len(agents_saved_to_db)}] agent(s) to database. [{len(agents_existed_in_db)}] agent(s) already existed in database and were skipped. [{len(errored_saving_to_db)}] error(s) saving agent(s) to database.")
 
+    if return_schemas:
+        log.debug("return_schemas=True, converting RegisteredAgentModel object to RegisteredAgentOut object.")
+
+        agent_schemas: list[agent_domain.RegisteredAgentOut] = []
+        errored_converting_model_to_schema: list[agent_domain.RegisteredAgentModel] = []
+        
+        for db_agent in agents_saved_to_db:
+            try:
+                converted_agent: agent_domain.RegisteredAgentOut = agent_ctl.convert_agent_model_to_schema(db_agent=db_agent)
+                agent_schemas.append(converted_agent)
+                
+                continue
+            except Exception as exc:
+                log.error(f"Errored converting agent '{db_agent.symbol}' to RegisteredAgentOut object. Details: {exc}")
+                errored_converting_model_to_schema.append(db_agent)
+                
+                continue
+            
+        if errored_converting_model_to_schema:
+            log.warning(f"Saved [{len(agents_saved_to_db)}], errored converting [{len(errored_converting_model_to_schema)}] database model(s) to RegisteredAgentOut schema(s). Returning [{len(agent_schemas)}] agent schema(s)")
+            
+        return agent_schemas
+    else:
+        return agents_saved_to_db
