@@ -8,7 +8,7 @@ from project_cli.main import app as cli_app
 
 def start_cli(app: App):
     try:
-        cli_app.meta()
+        app.meta()
     except Exception as exc:
         msg = f"({type(exc)}) error"
         log.error(msg)
@@ -17,4 +17,5 @@ def start_cli(app: App):
     
 if __name__ == "__main__":
     setup.setup_loguru_logging(log_level="ERROR", log_fmt="basic")
+    setup.setup_database()
     start_cli(app=cli_app)
