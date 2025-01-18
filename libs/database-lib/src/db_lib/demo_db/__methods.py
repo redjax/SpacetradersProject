@@ -1,11 +1,13 @@
-from loguru import logger as log
-from .constants import DEMO_DB_CONFIG
+from __future__ import annotations
+
 from db_lib.__methods import get_db_uri, get_engine, get_session_pool
 
-import sqlalchemy as sa
-import sqlalchemy.orm as so
-import sqlalchemy.exc as sa_exc
+from .constants import DEMO_DB_CONFIG
 
+from loguru import logger as log
+import sqlalchemy as sa
+import sqlalchemy.exc as sa_exc
+import sqlalchemy.orm as so
 
 def return_demo_db_config(
     drivername: str = "sqlite+pysqlite",

@@ -1,12 +1,13 @@
+from __future__ import annotations
+
 import agent_ctl
 import db_lib
 import db_lib.demo_db
 import depends
+from domain.spacetraders import agent as agent_domain
 from loguru import logger as log
 import settings
 import setup
-from domain.spacetraders import agent as agent_domain
-
 
 if __name__ == "__main__":
     setup.setup_loguru_logging(

@@ -1,12 +1,12 @@
-from loguru import logger as log
+from __future__ import annotations
 
-import db_lib
 from .models import RegisteredAgentModel
 
+import db_lib
+from loguru import logger as log
 import sqlalchemy as sa
 import sqlalchemy.exc as sa_exc
 import sqlalchemy.orm as so
-
 
 class RegisteredAgentRepository(db_lib.base.BaseRepository[RegisteredAgentModel]):
     """Repository for registered Spacetrader agents."""

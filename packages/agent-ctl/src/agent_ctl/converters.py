@@ -1,14 +1,15 @@
-from loguru import logger as log
+from __future__ import annotations
 
 import typing as t
-from domain.spacetraders.agent.schemas import (
-    RegisteredAgentIn,
-    RegisteredAgentOut,
-    RegisterAgentResponse,
-)
+
 from domain.spacetraders.agent.models import RegisteredAgentModel
 from domain.spacetraders.agent.repository import RegisteredAgentRepository
-
+from domain.spacetraders.agent.schemas import (
+    RegisterAgentResponse,
+    RegisteredAgentIn,
+    RegisteredAgentOut,
+)
+from loguru import logger as log
 
 def convert_agent_schema_to_model(agent: t.Union[RegisterAgentResponse, RegisteredAgentIn]) -> RegisteredAgentModel:
     """Convert a RegisterAgentResponse class object to a RegisteredAgentModel object.

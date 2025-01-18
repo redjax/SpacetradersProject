@@ -1,18 +1,18 @@
-from loguru import logger as log
+from __future__ import annotations
 
 import typing as t
 
+import agent_ctl
 from cyclopts import App, Group, Parameter
 from depends import db_depends
+from domain.spacetraders import agent as agent_domain
+from loguru import logger as log
 import settings
 import setup
 import sqlalchemy as sa
-import sqlalchemy.orm as so
 import sqlalchemy.exc as sa_exc
+import sqlalchemy.orm as so
 import sqlalchemy.sql as sa_sql
-
-from domain.spacetraders import agent as agent_domain
-import agent_ctl
 
 agent_app = App(name="agent", help="CLI for managing Spacetraders agents.")
 

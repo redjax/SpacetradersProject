@@ -5,11 +5,11 @@ import core_utils
 import core_utils.hash_utils
 import core_utils.uuid_utils
 import db_lib
+from domain.spacetraders import agent as agent_domain
 import http_lib
 from loguru import logger as log
 import settings
 import setup
-from domain.spacetraders import agent as agent_domain
 
 demo_db_dict = {
     "drivername": "sqlite+pysqlite",

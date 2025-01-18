@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from project_cli.main import app as cli_app
 
 from cyclopts import App
