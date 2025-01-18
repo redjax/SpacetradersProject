@@ -1,5 +1,6 @@
 from loguru import logger as log
 
+import typing as t
 from domain.spacetraders.agent.schemas import (
     RegisteredAgentIn,
     RegisteredAgentOut,
@@ -9,7 +10,7 @@ from domain.spacetraders.agent.models import RegisteredAgentModel
 from domain.spacetraders.agent.repository import RegisteredAgentRepository
 
 
-def convert_agent_schema_to_model(agent: RegisterAgentResponse) -> RegisteredAgentModel:
+def convert_agent_schema_to_model(agent: t.Union[RegisterAgentResponse, RegisteredAgentIn]) -> RegisteredAgentModel:
     """Convert a RegisterAgentResponse class object to a RegisteredAgentModel object.
     
     Params:
@@ -21,14 +22,15 @@ def convert_agent_schema_to_model(agent: RegisterAgentResponse) -> RegisteredAge
     """
     if agent is None:
         raise ValueError("Missing a Spacetraders Agent.")
-    if not isinstance(agent, RegisterAgentResponse):
+    if not isinstance(agent, RegisterAgentResponse) and not isinstance(agent, RegisteredAgentIn):
         raise TypeError(
-            f"Invalid type for agent: {type(agent)}. Expected a RegisterAgentResponse class."
+            f"Invalid type for agent: {type(agent)}. Expected a RegisterAgentResponse or RegisteredAgentIn class."
         )
 
     log.debug("Convert RegisteredAgentIn to RegisteredAgentModel")
     try:
         agent_model: RegisteredAgentModel = RegisteredAgentModel(
+            account_id=agent.account_id,
             symbol=agent.symbol,
             faction=agent.faction,
             headquarters=agent.headquarters,
