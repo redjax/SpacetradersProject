@@ -1,0 +1,1 @@
+from .__pipelines import pipeline_register_random_agents
