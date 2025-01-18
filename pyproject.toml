@@ -13,6 +13,7 @@ dependencies = [
     "dynaconf>=3.2.6",
     "http-lib",
     "loguru>=0.7.3",
+    "pipelines",
     "project-cli",
     "pydantic>=2.10.5",
     "settings-lib",
@@ -42,9 +43,10 @@ setup-lib = { workspace = true }
 agent-ctl = { workspace = true }
 spacetraders-ctl = { workspace = true }
 project-cli = { workspace = true }
+pipelines = { workspace = true }
 
 [tool.uv.workspace]
-members = ["libs/*", "packages/domain", "packages/agent-ctl", "packages/spacetraders-ctl", "applications/project-cli"]
+members = ["libs/*", "packages/domain", "packages/agent-ctl", "packages/spacetraders-ctl", "applications/project-cli", "packages/pipelines"]
 
 [build-system]
 requires = ["hatchling"]

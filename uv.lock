@@ -9,6 +9,7 @@ members = [
     "depends-lib",
     "domain",
     "http-lib",
+    "pipelines",
     "project-cli",
     "settings-lib",
     "setup-lib",
@@ -547,6 +548,11 @@ wheels = [
 ]
 
 [[package]]
+name = "pipelines"
+version = "0.1.0"
+source = { editable = "packages/pipelines" }
+
+[[package]]
 name = "platformdirs"
 version = "4.3.6"
 source = { registry = "https://pypi.org/simple" }
@@ -870,6 +876,7 @@ dependencies = [
     { name = "dynaconf" },
     { name = "http-lib" },
     { name = "loguru" },
+    { name = "pipelines" },
     { name = "project-cli" },
     { name = "pydantic" },
     { name = "settings-lib" },
@@ -894,6 +901,7 @@ requires-dist = [
     { name = "dynaconf", specifier = ">=3.2.6" },
     { name = "http-lib", editable = "libs/http-lib" },
     { name = "loguru", specifier = ">=0.7.3" },
+    { name = "pipelines", editable = "packages/pipelines" },
     { name = "project-cli", editable = "applications/project-cli" },
     { name = "pydantic", specifier = ">=2.10.5" },
     { name = "settings-lib", editable = "libs/settings-lib" },
