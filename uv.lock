@@ -22,6 +22,7 @@ name = "agent-ctl"
 version = "0.1.0"
 source = { editable = "packages/agent-ctl" }
 dependencies = [
+    { name = "cyclopts" },
     { name = "database-lib" },
     { name = "dynaconf" },
     { name = "http-lib" },
@@ -35,6 +36,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "cyclopts", specifier = ">=3.1.5" },
     { name = "database-lib", editable = "libs/database-lib" },
     { name = "dynaconf", specifier = ">=3.2.6" },
     { name = "http-lib", editable = "libs/http-lib" },
