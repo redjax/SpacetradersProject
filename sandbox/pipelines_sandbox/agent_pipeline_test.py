@@ -1,14 +1,14 @@
-import db_lib.demo_db
-from loguru import logger as log
+from __future__ import annotations
 
+import agent_ctl
 import db_lib
+import db_lib.demo_db
 from depends import db_depends
 from domain.spacetraders import agent as agent_domain
-import agent_ctl
+from loguru import logger as log
 from pipelines.spacetraders_api_pipelines import agent_pipelines
-import setup
 import settings
-
+import setup
 
 def main(db_engine=None, num_agents_to_register: int = 3):
     log.info("Starting agent registration pipeline")

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 import typing as t
 
@@ -20,7 +22,6 @@ for sub_cli in MOUNT_SUB_CLIS:
 @app.meta.default
 def cli_launcher(*tokens: t.Annotated[str, Parameter(show=False, allow_leading_hyphen=True)], debug: bool = False) :
     """CLI entrypoint."""
-    
     if debug:
         log.add(sys.stderr, format="{time:YYYY-MM-DD HH:mm:ss} | [{level}] | {name}.{function}:{line} |> {message}", level="DEBUG")
         log.debug("CLI debugging enabled")

@@ -18,6 +18,7 @@ class RegisteredAgentModel(db_lib.Base, db_lib.TimestampMixin):
         full_response (dict): The full JSON response from the "POST register agent" request.
 
     """
+
     __tablename__ = "registeredAgent"
 
     agent_id: so.Mapped[db_lib.annotated.INT_PK]

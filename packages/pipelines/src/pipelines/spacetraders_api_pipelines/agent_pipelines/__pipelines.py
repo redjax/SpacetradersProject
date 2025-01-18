@@ -1,16 +1,15 @@
-from loguru import logger as log
+from __future__ import annotations
 
-import typing as t
 import time
+import typing as t
+
+import agent_ctl
 import db_lib
 from depends import db_depends
-import settings
-
 from domain.spacetraders import agent as agent_domain
-import agent_ctl
-
+from loguru import logger as log
+import settings
 import sqlalchemy as sa
-
 
 def pipeline_register_random_agents(num_agents: int = 3, loop_sleep: int = 5, save_to_db: bool = False, db_engine: sa.Engine | None = None, return_schemas: bool = False) -> list[t.Union[agent_domain.RegisteredAgentModel, agent_domain.RegisteredAgentIn, agent_domain.RegisteredAgentOut]]:
     if save_to_db:

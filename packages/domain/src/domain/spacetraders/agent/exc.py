@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 class AgentAlreadyRegisteredException(Exception):
     """Exception raised when a Spacetraders agent register request returns a 409: Conflict.
     

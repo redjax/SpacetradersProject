@@ -1,10 +1,12 @@
-from loguru import logger as log
+from __future__ import annotations
 
 import typing as t
-from domain.spacetraders import agent as agent_domain
-from agent_ctl.converters import convert_agent_schema_to_model
-from depends import db_depends
 
+from agent_ctl.converters import convert_agent_schema_to_model
+
+from depends import db_depends
+from domain.spacetraders import agent as agent_domain
+from loguru import logger as log
 import sqlalchemy as sa
 
 def load_registered_agent_by_symbol(symbol: str, engine: sa.Engine = None) -> agent_domain.RegisteredAgentModel | None:

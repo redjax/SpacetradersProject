@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import json
 
-from core_utils.uuid_utils import get_rand_uuid
 from agent_ctl.constants import API_AGENT_REGISTER_URL
+
+from core_utils.uuid_utils import get_rand_uuid
 from domain.spacetraders import agent as agent_domain
 import http_lib
 import httpx
 from loguru import logger as log
-
 
 def get_random_agent_symbol() -> str:
     return get_rand_uuid(characters=14)

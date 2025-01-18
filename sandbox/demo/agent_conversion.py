@@ -1,12 +1,13 @@
-import db_lib.demo_db
-from loguru import logger as log
+from __future__ import annotations
 
-import db_lib
-from depends import db_depends
-import setup
-import settings
 import agent_ctl
+import db_lib
+import db_lib.demo_db
+from depends import db_depends
 from domain.spacetraders import agent as agent_domain
+from loguru import logger as log
+import settings
+import setup
 
 if __name__ == "__main__":
     setup.setup_loguru_logging(log_level=settings.LOGGING_SETTINGS.get("LOG_LEVEL", default="INFO"))
