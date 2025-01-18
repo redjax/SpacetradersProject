@@ -20,6 +20,8 @@ def main(db_engine=None, num_agents_to_register: int = 3):
     registered_agent_model_schemas: list[agent_domain.RegisteredAgentOut]  | None= agent_pipelines.pipeline_register_random_agents(num_agents=num_agents_to_register, save_to_db=True, db_engine=db_engine, return_schemas=True)
     if registered_agent_model_schemas:
         log.info(f"Registered [{len(registered_agent_model_schemas)}] agent(s). List is RegisteredAgentOut objects")
+        
+    log.info(f"Registered [{len(registered_agent_models) + len(registered_agent_model_schemas)}] agent(s) in total.")
     
 
 if __name__ == "__main__":
