@@ -36,5 +36,7 @@ def register_new_agent(symbol: t.Annotated[str, Parameter(name="symbol", show_de
     
     log.success(f"Registered agent: {symbol}")
     
-    agent: agent_domain.RegisteredAgentIn.model_validate(agent_dict)
+    agent: agent_domain.RegisteredAgentIn = agent_domain.RegisteredAgentIn.model_validate(agent_dict)
     log.debug(f"Registered agent: {agent}")
+    
+    # agent_ctl.db_client.
