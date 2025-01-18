@@ -20,3 +20,24 @@ def load_registered_agent_by_symbol(symbol: str) -> agent_domain.RegisteredAgent
     else:
         log.success(f"Found registered agent matching symbol: {symbol}")
         return registered_agent
+
+
+def save_registered_agent_to_db(agent: agent_domain.RegisteredAgentIn):
+    if not agent:
+        raise ValueError("agent cannot be None.")
+    
+    session_pool = db_depends.get_session_pool()
+    
+    with session_pool() as session:
+        repo = agent_domain.RegisteredAgentRepository(session)
+        
+        
+
+        log.debug(f"Saving agent: {agent.symbol}")
+        try:
+            repo.create(agent_model)
+        except Exception as exc:
+            msg = f"({type(exc)}) Error saving agent '{agent.symbol}'. Details: {exc}"
+            log.error(msg)
+            
+            raise exc
