@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 
+from core_utils.uuid_utils import get_rand_uuid
 from agent_ctl.constants import API_AGENT_REGISTER_URL
 from domain.spacetraders import agent as agent_domain
 import http_lib
@@ -102,7 +103,7 @@ def register_agent(agent_symbol: str = None, agent_faction: str = "COSMIC", head
         raise exc
     
     try:
-        parsed_agent = parse_register_agent_response(response_obj=register_agent_res)
+        parsed_agent: dict = parse_register_agent_response(response_obj=register_agent_res)
         
         return parsed_agent
     except Exception as exc:
@@ -134,3 +135,32 @@ def register_multiple_agents(agents: list[dict], headers: dict = { "Content-Type
     log.info(f"Successfully registered [{len(agent_responses)}] agent(s).")
     
     return agent_responses
+
+
+def register_random_agent(retry_on_taken_username: bool = False) -> dict:
+    """Generate a random agent username (UUID trimmed to 14 characters) and register it.
+    
+    Params:
+        retry_on_taken_username (bool): When `True`, retry if a username is already taken (409 response).
+    
+    Returns:
+        (dict): A decoded agent response dict.
+
+    """
+    symbol: str = get_rand_uuid(characters=14)
+    
+    log.debug(f"Registering agent: {symbol}")
+    try:
+        res: dict = register_agent(agent_symbol=symbol)
+        log.success(f"Registered agent '{symbol}'.")
+        
+        return res
+    except agent_domain.exc.AgentAlreadyRegisteredException:
+        log.warning(f"Random agent symbol '{symbol}' already registered.")
+        if retry_on_taken_username:
+            log.debug("Retrying random agent registration.")
+            register_random_agent(retry_on_taken_username=retry_on_taken_username)
+    except Exception as exc:
+        msg = f"({type(exc)}): Error registering random agent. Details: {exc}"
+        log.error(msg)
+        raise exc
