@@ -13,7 +13,13 @@ import settings
 def main(db_engine=None, num_agents_to_register: int = 3):
     log.info("Starting agent registration pipeline")
     
-    registered_agents = agent_pipelines.pipeline_register_random_agents(num_agents=num_agents_to_register, save_to_db=True, db_engine=db_engine)
+    registered_agent_models: list[agent_domain.RegisteredAgentModel] | None = agent_pipelines.pipeline_register_random_agents(num_agents=num_agents_to_register, save_to_db=True, db_engine=db_engine)
+    if registered_agent_models:
+        log.info(f"Registered [{len(registered_agent_models)}] agent(s). List is RegisteredAgentModel objects")
+    
+    registered_agent_model_schemas: list[agent_domain.RegisteredAgentOut]  | None= agent_pipelines.pipeline_register_random_agents(num_agents=num_agents_to_register, save_to_db=True, db_engine=db_engine, return_schemas=True)
+    if registered_agent_model_schemas:
+        log.info(f"Registered [{len(registered_agent_model_schemas)}] agent(s). List is RegisteredAgentOut objects")
     
 
 if __name__ == "__main__":
@@ -23,4 +29,4 @@ if __name__ == "__main__":
     
     setup.setup_database(engine=demo_db_engine)
     
-    main(db_engine=demo_db_engine, num_agents_to_register=1)
+    main(db_engine=demo_db_engine, num_agents_to_register=3)
