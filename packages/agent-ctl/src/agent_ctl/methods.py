@@ -9,6 +9,10 @@ import http_lib
 import httpx
 from loguru import logger as log
 
+
+def get_random_agent_symbol() -> str:
+    return get_rand_uuid(characters=14)
+
 def build_register_agent_request(
     agent_symbol: str = None,
     agent_faction: str = "COSMIC",
@@ -147,7 +151,7 @@ def register_random_agent(retry_on_taken_username: bool = False) -> dict:
         (dict): A decoded agent response dict.
 
     """
-    symbol: str = get_rand_uuid(characters=14)
+    symbol: str = get_random_agent_symbol()
     
     log.debug(f"Registering agent: {symbol}")
     try:

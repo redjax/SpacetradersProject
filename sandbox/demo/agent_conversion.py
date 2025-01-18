@@ -20,7 +20,7 @@ if __name__ == "__main__":
     
     log.info("Converting registered agent response dict to RegisterAgentResponse")
     try:
-        random_agent: agent_domain.RegisterAgentResponse = agent_ctl.convert_agent_dict_to_class(random_agent_dict)
+        random_agent: agent_domain.RegisterAgentResponse = agent_ctl.convert_register_agent_res_dict_to_class(random_agent_dict)
         log.success(f"Converted agent dict to RegisteredAgentResponse object.")
     except Exception as exc:
         msg = f"({type(exc)}) Error converting registered agent response dict to RegisterAgentResponse. Details: {exc}"

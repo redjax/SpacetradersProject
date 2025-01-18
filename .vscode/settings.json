@@ -8,6 +8,7 @@
         "./libs/setup-lib",
         "./packages/domain/src",
         "./packages/agent-ctl/src",
-        "./packages/spacetraders-ctl/src"
+        "./packages/spacetraders-ctl/src",
+        "./packages/pipelines/src"
     ]
 }

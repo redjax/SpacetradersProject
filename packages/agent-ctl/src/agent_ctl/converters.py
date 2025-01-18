@@ -69,7 +69,7 @@ def convert_agent_model_to_schema(db_agent: RegisteredAgentModel) -> RegisteredA
         raise exc
 
 
-def convert_agent_dict_to_class(agent_dict: dict) -> RegisterAgentResponse:
+def convert_register_agent_res_dict_to_class(agent_dict: dict) -> RegisterAgentResponse:
     """Convert a dict representing the response from an HTTP POST request to register a new agent."""
     try:
         agent: RegisterAgentResponse = RegisterAgentResponse(full_response=agent_dict)
